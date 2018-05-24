@@ -10,6 +10,7 @@ const RangePicker = DatePicker.RangePicker
 const RadioGroup = Radio.Group
 const Option = Select.Option
 const CheckboxGroup = Checkbox.Group
+const {TextArea} = Input
 // let globalIndex = 0
 let formState = {value: 'resolve'}
 
@@ -64,6 +65,10 @@ class MyForm extends Component {
       return (
         <CheckboxGroup options={plainOptions} />
       )
+    case 'TextArea':
+      return (
+        <TextArea placeholder={placeholder} autosize />
+      )
     default:
       throw new Error(`无法识别的控件名 ${name}`)
     }
@@ -117,7 +122,7 @@ class MyForm extends Component {
                 {/* 遍历出每一个控件 */}
                 return (
                   <div key={lineIndex} className='myform-line'>
-                    {line.length > 3 && new Error('一行最多只能有三个控件')}
+                    {line.length > 2 && new Error('一行最多只能有两个控件')}
                     {line.map((item, index) => {
                       const {key = index, control = {name: 'input', type: 'text', size: 'default', defaultValue: '', placeholder: ''}, varName = '', label = '', rules = [], trigger = 'onChange'} = item
                       if (varName === '' || varName === void 0) {
@@ -130,11 +135,11 @@ class MyForm extends Component {
                       return (
                         <div
                           className='myform-control'
-                          style={[0, 1].includes(parseInt(key)) ? {marginRight: '40px'} : {}}
+                          style={line.length === 1 ? {width: '1000px'} : ([0, 1].includes(parseInt(key)) ? {marginRight: '40px'} : {})}
                           key={key}>
                           <FormItem
-                            labelCol={{ span: 4 }}
-                            wrapperCol={{ span: 19, offset: 1 }}
+                            labelCol={line.length === 1 ? {span: 2} : { span: 4 }}
+                            wrapperCol={line.length === 1 ? {span: 21, offset: 0} : { span: 19, offset: 1 }}
                             label={this.createLabel(label)}>
                             {getFieldDecorator(varName, {
                               rules,
