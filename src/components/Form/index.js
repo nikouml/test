@@ -20,8 +20,8 @@ class MyForm extends Component {
     fetching: false
   }
   componentDidMount () {
-    const {time, url, method} = config.save
-    saveInTime(time, formState, {url, axios, method}, message).call(this)
+    // const {time, url, method} = config.save
+    // saveInTime(time, formState, {url, axios, method}, message).call(this)
   }
   componentDidUpdate () {
     formState.value = 'pending'
@@ -32,12 +32,18 @@ class MyForm extends Component {
       switch (res.data.code) {
       }
     }) */
-    setTimeout(() => {
-      this.setState({searchData: [{value: 'a', label: 'A'}], fetching: false})
-    }, 1000)
+    if (!url) {
+      throw new Error('没有传入url')
+    }
+    axios.get(url)
+      .then(res => {
+        this.setState({searchData: res.data, fetching: false})
+      }).catch(err => {
+        message.error(err.message || '发生错误')
+      })
   }
   // 创建control
-  getControl ({type, size, name, placeholder, format, showTime = false, style, select = [], plainOptions = [], defaultCheckedList = [], selectSearch = {url: '/', method: 'get'}}) {
+  getControl ({type, size, name, placeholder, format, showTime = false, style, select = [], plainOptions = [], defaultCheckedList = [], selectSearch = {}}) {
     switch (name) {
     case 'input':
       return (
@@ -159,7 +165,7 @@ class MyForm extends Component {
                       if (label === '' || label === void 0) {
                         throw new Error(`label 必填 ${index}`)
                       }
-                      const {name, type, size, defaultValue, placeholder, format, showTime, style, select, plainOptions, defaultCheckedList} = control
+                      const {name, type, size, defaultValue, placeholder, format, showTime, style, select, plainOptions, defaultCheckedList, selectSearch} = control
                       return (
                         <div
                           className='myform-control'
@@ -173,7 +179,7 @@ class MyForm extends Component {
                               rules,
                               initialValue: defaultValue,
                               trigger
-                            })(this.getControl({type, name, size, placeholder, format, showTime, style, select, plainOptions, defaultCheckedList}))}
+                            })(this.getControl({type, name, size, placeholder, format, showTime, style, select, plainOptions, defaultCheckedList, selectSearch}))}
                           </FormItem>
                         </div>
                       )

@@ -137,9 +137,9 @@ export default {
             name: 'searchSelect',
             size: 'small',
             placeholder: '请输入信息',
-            selectSearch: {url: '/', method: 'get'}
+            selectSearch: {url: 'http://192.168.1.5:3000/xialalie/test', method: 'get'}
           },
-          varName: 'rangnedaa',
+          varName: 'rangnedaaa',
           label: '时间1',
           rules: [
             {required: true, message: '必选'}
