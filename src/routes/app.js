@@ -5,6 +5,7 @@ import NotFound from './404'
 import dynamic from 'dva/dynamic'
 import Layout from 'components/Layout'
 import DemoPage from './demo/index'
+import SearchPage from './search'
 import path, {namesMap} from 'routerForm'
 const {HomePage, AsyncPage, Page404} = namesMap
 
@@ -16,6 +17,7 @@ const App = (props) => {
         <Route exact path='/' component={Homepage} />
         <Route path='/home' component={Homepage} />
         <Route path='/demo' component={DemoPage} />
+        <Route path='/search' component={SearchPage} />
         <Route path={path(AsyncPage)} component={AsyncDemo} />
         <Route path={path(Page404)} component={NotFound} />
         <Redirect from='*' to='/404' />

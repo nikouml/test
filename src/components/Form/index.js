@@ -146,7 +146,7 @@ class MyForm extends Component {
           const {title = false, key = index, content = {}} = item
           const contentArr = Array.from(content)
           return (
-            <Card key={key} style={{overflowX: 'auto', marginTop: '10px', textAlign: 'left', display: 'flex', flexDirection: 'column'}}>
+            <Card key={key} style={{overflowX: 'auto', marginTop: index === 0 ? '0' : '10px', textAlign: 'left', display: 'flex', flexDirection: 'column'}}>
               {/* 显示标题 */}
               {title && (
                 <div className='myform-title'>{title}</div>
