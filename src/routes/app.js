@@ -9,6 +9,7 @@ import Login from './Login/index'
 import Forget from './Login/forget/index'
 import Register from './Login/register/index'
 import SearchPage from './search'
+import HomeModel from './modelHomePage/index'
 import path, { namesMap } from 'routerForm'
 
 const {HomePage, AsyncPage, Page404} = namesMap
@@ -20,6 +21,7 @@ const App = (props) => {
       <Route path='/login' component={Login} />
       <Route path='/forget' component={Forget} />
       <Route path='/register' component={Register} />
+      <Route path='/model' component={HomeModel} />
       <Layout>
         <Route exact path='/' component={Homepage} />
         <Route path='/home' component={Homepage} />
