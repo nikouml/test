@@ -1,5 +1,6 @@
 import React from 'react'
-import { Form, Button, Input, Icon} from 'antd'
+import { Form, Button, Input, Icon, message} from 'antd'
+import axios from 'axios'
 import neuqer from '../../images/logo_white.png'
 import regexp from '../../utils/regexp'
 import { Link } from 'dva/router'
@@ -19,8 +20,33 @@ class Login extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    console.log('submit')
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.setState({loading: true})
+        axios.post(`http://192.168.1.5:3000/user/login`, {
+          mobile: values.mobile,
+          password: values.password
+        }).then(res => {
+          localStorage.setItem('datetime', new Date().toLocaleTimeString())
+          localStorage.setItem('token', res.data.token)
+          localStorage.setItem('user_id', res.data.user_id)
+          this.setState({loading: false})
+          if (res.data.code === 1000) {
+            message.success('登录成功')
+            this.props.history.push('/forget')
+            console.log(111)
+          } else if (res.data.code === 1005) {
+            message.error('密码错误')
+          } else if (res.data.code === 1004) {
+            message.error('用户不存在')
+          } else {
+            message.error('表单验证失败')
+          }
+        }).catch(err => {
+          this.setState({loading: false})
+          throw (new Error(err.message))
+        })
       }
     })
   }
@@ -59,7 +85,7 @@ class Login extends React.Component {
                 <Input addonBefore={<Icon type='lock' />} type='password'  placeholder='密码' />
               )}
             </FormItem>
-            <Button type='primary' size='large' htmlType="submit" loading={this.state.loading}>
+            <Button type='primary' size='large' onClick={this.handleSubmit} htmlType="submit" loading={this.state.loading}>
               登录
             </Button>
 
