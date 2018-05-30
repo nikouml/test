@@ -1,7 +1,33 @@
 import React from 'react'
-import {Row, Col, Calendar,Icon} from 'antd'
+import {Row, Col,Icon} from 'antd'
+import axios from 'axios'
 import './index.css'
 class modelHomePage extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      true_name: ''
+    }
+  }
+  componentDidMount () {
+    const token = localStorage.token, url = 'http://192.168.1.5:3000/user'
+    const config = {
+      method: 'get',
+      url: url,
+      headers: {'Content-Type': 'application/json', 'token': token}
+    }
+    axios(config)
+      .then(res => {
+        console.log(res)
+        const trueName = res.data.userInfo.true_name
+        this.setState({
+          true_name: trueName
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
   render () {
     const url = 'url("http://p53vmqr8d.bkt.clouddn.com/0.png")'
     let urls = []
@@ -13,7 +39,7 @@ class modelHomePage extends React.Component {
       <div className='back' style={{backgroundImage: url}}>
         <div className='title'>
           <span className='titleText titleLeft'>秦皇岛物业行政监管平台</span>
-          <span className='titleText titleRight'><Icon type="user" /> admin <a><Icon type="down" /></a></span>
+          <span className='titleText titleRight'><Icon type="user" /> {this.state.true_name} <a><Icon type="down" /></a></span>
         </div>
         <div className='modelsLeft' style={{width: '70%'}}>
           <div className='models1' >
