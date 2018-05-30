@@ -145,7 +145,7 @@ class Forget extends React.Component {
             <div className="footer">
               <span>已有账号，我要</span>
               <Link to={'/login'}>
-                <span>登录</span>
+                <span className="login_link">登录</span>
               </Link>
             </div>
           </Form>

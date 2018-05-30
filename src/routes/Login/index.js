@@ -34,7 +34,7 @@ class Login extends React.Component {
           this.setState({loading: false})
           if (res.data.code === 1000) {
             message.success('登录成功')
-            this.props.history.push('/forget')
+            this.props.history.push('/model')
             console.log(111)
           } else if (res.data.code === 1005) {
             message.error('密码错误')
@@ -92,7 +92,7 @@ class Login extends React.Component {
           </Form>
           <div className='login-footer'>
             <Link to={'/register'}>
-              <span>注册账号</span>
+              <span className='login-form-forgot'>注册账号</span>
             </Link>
             <Link to={'/forget'}>
               <span className='login-form-forgot'>忘记密码</span>
