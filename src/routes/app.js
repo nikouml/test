@@ -18,17 +18,23 @@ const App = (props) => {
   const AsyncDemo = dynamic({component: () => System.import('./asyncDemo')})
   return (
     <Switch>
-      <Route exact path='/' component={Login} />
-      <Route path='/forget' component={Forget} />
-      <Route path='/register' component={Register} />
-      <Route path='/model' component={HomeModel} />
-      <Layout>
-        <Route path='/home' component={Homepage} />
-        <Route path='/demo' component={DemoPage} />
-        <Route path='/search' component={SearchPage} />
-        <Route path={path(AsyncPage)} component={AsyncDemo} />
-        <Route path={path(Page404)} component={NotFound} />
+      <Switch>
+        <Route exact path='/' component={Login} />
+        <Route exact path='/login' component={Login} />
+        <Route path='/forget' component={Forget} />
+        <Route path='/register' component={Register} />
+        <Route path='/model' component={HomeModel} />
         <Redirect from='*' to='/404' />
+      </Switch>
+      <Layout>
+        <Switch>
+          <Route path='/home' component={Homepage} />
+          <Route path='/demo' component={DemoPage} />
+          <Route path='/search' component={SearchPage} />
+          <Route path={path(AsyncPage)} component={AsyncDemo} />
+          <Route path={path(Page404)} component={NotFound} />
+          <Redirect from='*' to='/404' />
+        </Switch>
       </Layout>
     </Switch>
   )
